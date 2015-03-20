@@ -108,6 +108,11 @@ function compare(a,b) {
   return 0;
 }
 
+/**
+ * Check if the given word is a stop word.
+ * @param  {String}  word Word to check against the stop words
+ * @return {Boolean}      Return true if found
+ */
 function isStopWord(word){
 	return (stopWords.indexOf(word) == -1) ? false : true;
 }
