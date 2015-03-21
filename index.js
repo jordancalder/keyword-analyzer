@@ -33,6 +33,8 @@ exports.wrest = function (source, options) {
 
 	dictionary.sort(compare);
 
+	dictionary = removeBelowMin(options.min, dictionary);
+
 	(options.frequency) ? results = objArrayWithFrequency(dictionary) : results = toWordArray(dictionary);
 	if(results.length > options.limit && options.limit != 0) results = results.slice(0, options.limit);
 	return results;
@@ -115,4 +117,11 @@ function compare(a,b) {
  */
 function isStopWord(word){
 	return (stopWords.indexOf(word) == -1) ? false : true;
+}
+
+function removeBelowMin(min, dict){
+	for(var	i=0; i < dict.length; i++){
+		if(dict[i].frequency < min) dict.splice(i, i+1);
+	}
+	return dict;
 }

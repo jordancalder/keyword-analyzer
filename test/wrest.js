@@ -9,7 +9,7 @@ describe('wrest()', function(){
 
 describe('wrest(num,[])', function(){
 	it('Should return results toString()', function(){
-		assert.equal('3', keys.wrest(3));
+		assert.equal('3', keys.wrest(3, {min:1}));
 	})
 })
 
@@ -39,6 +39,12 @@ describe('wrest(string,[])', function(){
 
 describe('wrest(string, {stopWords:[]})', function(){
 	it('Should allow added stop words', function(){
-		assert.deepEqual(["foo","bar","baz"], keys.wrest('foo foo foo foo bar bar bar bar baz coffee coffee coffee coffee toffee toffee', {stopWords:["coffee","toffee"]}))
+		assert.deepEqual(["foo","bar","baz"], keys.wrest('foo foo foo foo bar bar bar bar baz baz baz coffee coffee coffee coffee toffee toffee', {stopWords:["coffee","toffee"]}))
+	})
+})
+
+describe('wrest(string, {min:int})', function(){
+	it('Should return only words with the minimum occurances', function(){
+		assert.deepEqual(["foo", "bar"], keys.wrest('foo foo foo foo foo bar bar bar bar baz baz baz', {min:4}))
 	})
 })
