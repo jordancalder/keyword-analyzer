@@ -6,11 +6,14 @@
   "scripts": {
     "test": "test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jordancalder/keyword-analyzer.git"
+  },
   "devDependencies": {
     "mocha": "^2.2.1"
   },
   "keywords": [
-    "keyword",
     "keyword",
     "analyzer"
   ],
