@@ -4,23 +4,24 @@
 var stopWords = require('./stopWords.json');
 
 exports.wrest = function (source, options) {
-	var results			= [];
-	var words 			= [];
+	var results		= [];
+	var words 		= [];
 	var dictionary 	= [];
 
 	if (!source) return [];
 	if (typeof source !== 'string') source = source.toString();
 
-	if (!options) options 											= {};
-	if (!options.limit) options.limit 					= 0;
+	if (!options) options						= {};
+	if (!options.limit) options.limit 			= 0;
 	if (!options.frequency) options.frequency 	= false;
-	if (!options.min) options.min								= 2;
-	if (!options.stopWords) options.stopWords		= [];
-	if (!options.nWords) options.nWords 				= 1;
+	if (!options.min) options.min				= 2;
+	if (!options.stopWords) options.stopWords	= [];
+	if (!options.nWords) options.nWords 		= 1;
 
 	stopWords = stopWords.concat(options.stopWords);
 
-	words = source.toLowerCase().split(' ');
+	words = splitWords(options.nWords, source);
+
 	words.forEach(function(e, i, a){
 		var word = {
 			word: e,
@@ -124,4 +125,14 @@ function removeBelowMin(min, dict){
 		if(dict[i].frequency < min) dict.splice(i, i+1);
 	}
 	return dict;
+}
+
+function splitWords(n, string){
+	var array = string.split(" ");
+	var words = [];
+	for(var i=0;i<array.length;i++){
+	    words.push(array.slice(i,i+n).join(' '));
+	    i+=(n-1);
+	}
+	return words;
 }

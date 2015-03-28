@@ -48,3 +48,9 @@ describe('wrest(string, {min:int})', function(){
 		assert.deepEqual(["foo", "bar"], keys.wrest('foo foo foo foo foo bar bar bar bar baz baz baz', {min:4}))
 	})
 })
+
+describe('wrest(string, {nwords:2})', function(){
+	it('Should return words in groups if nwords specified', function(){
+		assert.deepEqual(["foo bar", "other stuff"], keys.wrest('foo bar other stuff foo bar other stuff foo bar', {nWords:2}))
+	})
+})
