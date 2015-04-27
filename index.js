@@ -1,43 +1,49 @@
 /**
  * Require deps
  */
-var stopWords = require('./stopWords.json');
+var stopWords = require('./stopWords.json')
 
 exports.wrest = function (source, options) {
-	var results		= [];
-	var words 		= [];
-	var dictionary 	= [];
+	var results		= []
+	var words 		= []
+	var dictionary 	= []
 
-	if (!source) return [];
-	if (typeof source !== 'string') source = source.toString();
+	if (!source) return []
+	if (typeof source !== 'string') source = source.toString()
 
-	if (!options) options						= {};
-	if (!options.limit) options.limit 			= 0;
-	if (!options.frequency) options.frequency 	= false;
-	if (!options.min) options.min				= 2;
-	if (!options.stopWords) options.stopWords	= [];
-	if (!options.nWords) options.nWords 		= 1;
+	if (!options) options						= {}
+	if (!options.limit) options.limit 			= 0
+	if (!options.frequency) options.frequency 	= false
+	if (!options.min) options.min				= 2
+	if (!options.stopWords) options.stopWords	= []
+	if (!options.nWords) options.nWords 		= 1
 
-	stopWords = stopWords.concat(options.stopWords);
+	stopWords = stopWords.concat(options.stopWords)
 
-	words = splitWords(options.nWords, source);
+	words = splitWords(options.nWords, source)
 
 	words.forEach(function(e, i, a){
 		var word = {
 			word: e,
 			frequency : 1
-		};
-		if (!isStopWord(e)){
-			(isInDictionary(e, dictionary)) ? incrementFrequency(e, dictionary) : dictionary.push(word);
 		}
-	});
+		if (!isStopWord(e)){
+			(isInDictionary(e, dictionary))
+				? incrementFrequency(e, dictionary)
+				: dictionary.push(word)
+		}
+	})
 
-	dictionary.sort(compare);
+	dictionary.sort(compare)
 
-	dictionary = removeBelowMin(options.min, dictionary);
+	dictionary = removeBelowMin(options.min, dictionary)
 
-	(options.frequency) ? results = objArrayWithFrequency(dictionary) : results = toWordArray(dictionary);
+	results = (options.frequency)
+		? objArrayWithFrequency(dictionary)
+		: toWordArray(dictionary)
+
 	if(results.length > options.limit && options.limit != 0) results = results.slice(0, options.limit);
+
 	return results;
 }
 
@@ -47,13 +53,13 @@ exports.wrest = function (source, options) {
  * @return {Array}   Array of objects
  */
 function objArrayWithFrequency(a){
-	var ret = [];
+	var ret = []
 	for(var i = 0; i < a.length; i++) {
-		var obj = {};
-		obj[a[i].word] = a[i].frequency;
-		ret.push(obj);
+		var obj = {}
+		obj[a[i].word] = a[i].frequency
+		ret.push(obj)
 	}
-	return ret;
+	return ret
 }
 
 /**
@@ -62,11 +68,11 @@ function objArrayWithFrequency(a){
  * @return {Array}   Final array
  */
 function toWordArray(a){
-	var ret = [];
+	var ret = []
 	for(var i = 0; i < a.length; i++) {
-		ret.push(a[i].word);
+		ret.push(a[i].word)
 	}
-	return ret;
+	return ret
 }
 
 /**
@@ -77,8 +83,8 @@ function toWordArray(a){
 function incrementFrequency (k, a) {
 	for(var i = 0; i < a.length; i++) {
 		if(a[i].word === k) {
-			a[i].frequency += 1;
-			return;
+			a[i].frequency += 1
+			return
 		}
 	}
 }
@@ -92,10 +98,10 @@ function incrementFrequency (k, a) {
 function isInDictionary(k, a){
     for (var i=0; i < a.length; i++) {
         if (a[i].word === k) {
-            return true;
+            return true
         }
     }
-    return false;
+    return false
 }
 
 /**
@@ -105,10 +111,10 @@ function isInDictionary(k, a){
  */
 function compare(a,b) {
   if (a.frequency > b.frequency)
-     return -1;
+     return -1
   if (a.frequency < b.frequency)
-    return 1;
-  return 0;
+    return 1
+  return 0
 }
 
 /**
@@ -117,22 +123,36 @@ function compare(a,b) {
  * @return {Boolean}      Return true if found
  */
 function isStopWord(word){
-	return (stopWords.indexOf(word) == -1) ? false : true;
+	return (stopWords.indexOf(word) == -1)
+		? false
+		: true
 }
 
+/**
+ * Remove occurances below the specified threshold.
+ * @param  {Number} min  The specified threshold
+ * @param  {Array} dict  The array of words to check
+ * @return {Array}       The return array (same as dict)
+ */
 function removeBelowMin(min, dict){
 	for(var	i=0; i < dict.length; i++){
-		if(dict[i].frequency < min) dict.splice(i, i+1);
+		if(dict[i].frequency < min) dict.splice(i, i+1)
 	}
-	return dict;
+	return dict
 }
 
+/**
+ * Split the string into groups of n words.
+ * @param  {Number} n      The number of words in the group.
+ * @param  {String} string The string to split up.
+ * @return {Array}         The return array.
+ */
 function splitWords(n, string){
-	var array = string.split(" ");
-	var words = [];
+	var array = string.split(" ")
+	var words = []
 	for(var i=0;i<array.length;i++){
-	    words.push(array.slice(i,i+n).join(' '));
-	    i+=(n-1);
+	    words.push(array.slice(i,i+n).join(' '))
+	    i+=(n-1)
 	}
-	return words;
+	return words
 }

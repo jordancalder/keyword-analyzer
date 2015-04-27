@@ -1,6 +1,6 @@
 {
   "name": "keyword-analyzer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A keyword analyzer tool that returns keyword frequency for a given set of text.",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,11 @@
   },
   "keywords": [
     "keyword",
-    "analyzer"
+    "keywords",
+    "text",
+    "analyzer",
+    "analysis",
+    "parser"
   ],
   "author": "Jordan Calder <jordancalder@gmail.com> (http://jordancalder.github.io/)",
   "license": "MIT"
