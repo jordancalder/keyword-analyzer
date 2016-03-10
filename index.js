@@ -1,7 +1,7 @@
 /**
  * Require deps
  */
-var stopWords = require('./stopWords.json')
+var stopWords = require('./stopwords.json')
 
 exports.wrest = function (source, options) {
 	var results		= []
