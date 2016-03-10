@@ -1,6 +1,6 @@
 {
   "name": "keyword-analyzer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A keyword analyzer tool that returns keyword frequency for a given set of text.",
   "main": "index.js",
   "scripts": {
