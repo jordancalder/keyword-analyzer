@@ -10,6 +10,7 @@ exports.wrest = function (source, options) {
 
 	if (!source) return []
 	if (typeof source !== 'string') source = source.toString()
+	source = source.replace(/[^_-\w\s]/gi, '').toLowerCase()
 
 	if (!options) options						= {}
 	if (!options.limit) options.limit 			= 0

@@ -54,3 +54,15 @@ describe('wrest(string, {nwords:2})', function(){
 		assert.deepEqual(["foo bar", "other stuff"], keys.wrest('foo bar other stuff foo bar other stuff foo bar', {nWords:2}))
 	})
 })
+
+describe('wrest(string, {limit:2})', function(){
+	it('Should return results stripped of punctuation, except hyphen, space, and underscore', function(){
+		assert.deepEqual(["foo", "bar", "foo-bar", "bar_foo"], keys.wrest('foo, bar. foo. bar. foo-bar foo-bar. bar_foo bar_foo?', {limit:4}))
+	})
+})
+
+describe('wrest(string, {limit:2})', function(){
+	it('Should return case-insensitive results', function(){
+		assert.deepEqual(["foo", "bar"], keys.wrest('Foo bar. Bar Foo foo', {limit:2}))
+	})
+})
